@@ -1,12 +1,12 @@
-const jsonServer = require('json-server')
-const server = jsonServer.create()
-const router = jsonServer.router('server.json')
-const middlewares = jsonServer.defaults()
+const jsonServer = require('json-server');
+const server = jsonServer.create();
+const router = jsonServer.router('server.json');
+const middlewares = jsonServer.defaults();
 
-server.use(middlewares)
-server.use(router)
+server.use(middlewares);
+server.use(router);
 server.listen(3333, () => {
-    console.log('JSON Server is running')
+    console.log('JSON Server is running');
 })
 
 router.render = (req, res) => {
@@ -25,5 +25,5 @@ router.render = (req, res) => {
 
     res.json(
         res.locals.data
-    )
+    );
 }

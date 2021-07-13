@@ -12,7 +12,6 @@ import { PlayerContext } from '../../contexts/playerContext';
 
 import arrowLeft from '../../../public/arrow-left.svg';
 import playImg from '../../../public/play.svg';
-import { copyFileSync } from "fs";
 
 type Episode = {
     id: string;
@@ -136,7 +135,7 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
     }
 
     console.log(data);
-    console.log(' OOOOOOOOOOOOOOOOOOOOOOOOOO')
+    console.log(' OOOOOOOOOOOOOOOOOOOOOOOOOO');
     console.log(episode);
 
     return {

@@ -14,7 +14,6 @@ import repeat from "../../../public/repeat.svg";
 import { useContext, useEffect, useRef, useState } from "react";
 import { PlayerContext } from "../../contexts/playerContext";
 import { convertDurationToTimeString } from "../../utils/convertDurationToTimeString";
-import { time } from "console";
 
 export default function Player() {
     const audioRef = useRef<HTMLAudioElement>(null);
