@@ -22,8 +22,8 @@ type Episode = {
   duration: Number;
   durationAsString: string;
   url: string;
-  previousEpisode: string;
-  nextEpisode: string;
+  previousEpisode: string | undefined | null;
+  nextEpisode: string | undefined | null;
 }
 
 type Homeprops = {
