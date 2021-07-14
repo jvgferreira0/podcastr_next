@@ -1,29 +1,32 @@
-const jsonServer = require('json-server');
-const server = jsonServer.create();
-const router = jsonServer.router('server.json');
-const middlewares = jsonServer.defaults();
+const express = require('express')
+const app = express()
+const port = 3333
 
-server.use(middlewares);
-server.use(router);
-server.listen(3333, () => {
-    console.log('JSON Server is running');
-})
+var fs = require('fs');
+var db = JSON.parse(fs.readFileSync('server.json', 'utf8'));
 
-router.render = (req, res) => {
-    for (i = 0; i < res.locals.data.length; ++i) {
-        let episode = res.locals.data[i];
-        episode['previousEpisode'] = " ";
-        episode['nextEpisode'] = " ";
-        if (i > 0) {
-            episode['previousEpisode'] = '/episodes/' + res.locals.data[i - 1].id;
-        }
-
-        if (i < res.locals.data.length - 1) {
-            episode['nextEpisode'] = '/episodes/' + res.locals.data[i + 1].id;
-        }
+for (let i = 0; i < db['episodes'].length; ++i) {
+    const episode = db['episodes'][i];
+    episode.previousEpisode = null;
+    episode.nextEpisode = null;
+    if (i > 0) {
+        episode.previousEpisode = db['episodes'][i - 1].id;
     }
 
-    res.json(
-        res.locals.data
-    );
+    if (i < db['episodes'].length - 1) {
+        episode.nextEpisode = db['episodes'][i + 1].id;
+    }
 }
+
+app.get('/episodes', (req, res) => {
+    res.send(db['episodes']);
+})
+
+app.get('/episodes/:id', (req, res) => {
+    const episode = db['episodes'].find(e => e.id == req.params.id);
+    res.send(episode);
+})
+
+app.listen(port, () => {
+    console.log(`Example app listening at http://localhost:${port}`)
+})

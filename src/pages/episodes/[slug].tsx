@@ -23,8 +23,8 @@ type Episode = {
     durationAsString: string;
     description: string;
     url: string;
-    previousEpisode: string;
-    nextEpisode: string;
+    previousEpisode: string | undefined | null;
+    nextEpisode: string | undefined | null;
 }
 
 type EpisodeProps = {
@@ -56,23 +56,7 @@ export default function Episode({ episode }: EpisodeProps) {
                 <span>{episode.durationAsString}</span>
             </header>
 
-
-            <div className={styles.pageButtonLeft}>
-                <Link href={`${episode.previousEpisode}`}>
-                    <button type='button'>
-                        <Image src={arrowLeft} alt=''></Image>
-                    </button>
-                </Link>
-            </div>
-            <div className={styles.pageButtonRight}>
-                <Link href={`${episode.nextEpisode}`}>
-                    <button type='button'>
-                        <Image src={arrowLeft} alt=''></Image>
-                    </button>
-                </Link>
-            </div>
-
-            {/* {episode.previousEpisode ? (
+            {episode['previousEpisode'] ? (
                 <div className={styles.pageButtonLeft}>
                     <Link href={`${episode.previousEpisode}`}>
                         <button type='button'>
@@ -85,8 +69,8 @@ export default function Episode({ episode }: EpisodeProps) {
                     <button type='button'>
                     </button>
                 </div>
-            )} */}
-            {/* {episode.nextEpisode ? (
+            )}
+            {episode['nextEpisode'] ? (
                 <div className={styles.pageButtonRight}>
                     <Link href={`${episode.nextEpisode}`}>
                         <button type='button'>
@@ -99,7 +83,7 @@ export default function Episode({ episode }: EpisodeProps) {
                     <button type='button'>
                     </button>
                 </div>
-            )} */}
+            )}
             <div
                 className={styles.description}
                 dangerouslySetInnerHTML={{ __html: episode.description }}
@@ -120,6 +104,8 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
 
     const { data } = await api.get(`/${slug}`);
 
+    console.log(data);
+
     const episode = {
         id: data.id,
         title: data.title,
@@ -134,9 +120,9 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
         nextEpisode: data.nextEpisode
     }
 
-    console.log(data);
-    console.log(' OOOOOOOOOOOOOOOOOOOOOOOOOO');
-    console.log(episode);
+    // console.log(data);
+    // console.log('OOOOOOOOOOOOOOOOOOOOOOOOOO');
+    // console.log(episode);
 
     return {
         props: {
